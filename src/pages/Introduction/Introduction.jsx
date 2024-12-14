@@ -1,4 +1,5 @@
 import React from 'react';
+import MapHolder from './MapHolder';
 
 const Introduction = () => {
     return (
@@ -51,24 +52,4 @@ const MainContent = () => {
     );
 };
 
-const MapHolder = () => {
-    return (
-        <div className="mt-8 bg-white p-4 rounded shadow">
-            {/* add a arcGIS map */}
 
-            <iframe
-                title="GENG Map"
-                className="w-full h-96"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.903983882642!2d105.779934314406!3d21.028812893004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abf1c6b9c5e1%3A0x3b6b7d5c5e1d0d0a!2zVHLGsOG7nW5nIFRo4bqhbuafLCDEkOG6oWk!5e0!3m2!1svi!2s!4v1632489381583!5m2!1svi!2s"
-                allowFullScreen=""
-                loading="lazy"
-            ></iframe>
-
-            {/* Mô hình tổng thể toà nhà */}
-            <p className="text-xl font-bold mb-4">
-                Mô hình tổng thể toà nhà
-            </p>
-
-        </div>
-    );
-};
