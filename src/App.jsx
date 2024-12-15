@@ -14,7 +14,7 @@ import Home from './pages/Home/Home'
 import Nice from './pages/Home/testhome'
 import Introduction from './pages/Introduction/Introduction'
 import RoomModel from './pages/RoomModel/RoomModel'
-import Search from './pages/Home/Search';
+import Search from './pages/Search/Search';
 import Details from './pages/Home/Details';
 function App() {
 	const [count, setCount] = useState(0)
