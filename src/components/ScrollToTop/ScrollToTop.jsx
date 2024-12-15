@@ -10,10 +10,10 @@ const RollToTopButton = () => {
     return (
         <div
             onClick={RollToTop}
-            className="z-40 w-[35px] h-[40px] flex items-center justify-center bg-teal-400 rounded-md animate-bounce fixed right-5 bottom-20 cursor-pointer"
+            className="z-40 w-[55px] h-[65px] flex items-center justify-center bg-teal-400 rounded-md animate-bounce fixed right-5 bottom-20 cursor-pointer"
         >
             <div className="flex items-center justify-center">
-                <FaArrowAltCircleUp size={25}/>
+                <FaArrowAltCircleUp size={35}/>
         
             </div>
         </div>
