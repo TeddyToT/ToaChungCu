@@ -7,7 +7,7 @@ const Home = () => {
     <div className="flex flex-col gap-16">
       <div className="w-full relative">
         <img className="w-full h-[500px] bg-black" src={bg} alt="Background" />
-        <p className="text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:text-2xl text-base font-black w-full text-center">
+        <p className="text-white  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:text-3xl text-base font-black w-full text-center">
           SỐNG TRỌN CHẤT MỸ, LÀM CHỦ TẦM CAO
         </p>
       </div>
