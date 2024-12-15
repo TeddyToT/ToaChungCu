@@ -70,13 +70,17 @@ const Header = () => {
                 </Link>
               </div>
               <div>
-                <Link to="/">
+              <Link to="/gioi-thieu">
                   <a
                     href="#"
-                    className="cursor-pointer hover:text-red-500 text-white"
+                    className={`cursor-pointer hover:text-red-500 text-white ${
+                      location.pathname === "/gioi-thieu"
+                        ? "underline"
+                        : ""
+                    }`}
                   >
                     GIỚI THIỆU
-                  </a>
+                  </a>{" "}
                 </Link>
               </div>
             </div>
@@ -173,13 +177,17 @@ const Header = () => {
                 </Link>
               </div>
               <div>
-                <Link to="/">
+              <Link to="/gioi-thieu">
                   <a
                     href="#"
-                    className="cursor-pointer hover:text-red-500  text-black"
+                    className={`cursor-pointer hover:text-red-500  ${
+                      location.pathname === "/gioi-thieu"
+                        ? "underline"
+                        : ""
+                    }`}
                   >
                     GIỚI THIỆU
-                  </a>
+                  </a>{" "}
                 </Link>
               </div>
             </div>

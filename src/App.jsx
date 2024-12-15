@@ -9,6 +9,8 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
 import Nice from './pages/Home/testhome'
+import Introduction from './pages/Introduction/Introduction'
+import RoomModel from './pages/RoomModel/RoomModel'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -24,6 +26,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/trang-chu" element={<Home />} />
               <Route path="/nice" element={<Nice />} />
+              <Route path="/gioi-thieu" element={<Introduction />} />
+              <Route path="/chi-tiet-phong" element={<RoomModel />} />
 
               
 
