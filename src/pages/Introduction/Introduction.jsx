@@ -37,7 +37,7 @@ const Sidebar = () => {
 
 const MainContent = () => {
     return (
-        <main className="col-span-3 bg-white p-6 rounded shadow">
+        <div className="col-span-3 bg-white p-6 rounded shadow">
             <h1 className="text-2xl font-bold mb-4">TẬP ĐOÀN GEN GROUP (GENG)</h1>
             <p className="mb-4">
                 GEN GROUP (GENG) là tập đoàn bất động sản tiên phong tại Việt Nam, chuyên cung cấp các loại hình căn hộ cao cấp như chung cư hiện đại, penthouse sang trọng, và các không gian sống đẳng cấp khác. Với bề dày kinh nghiệm cùng tầm nhìn chiến lược, GENG không chỉ kiến tạo những công trình chất lượng mà còn mang đến những giải pháp sống hoàn hảo, đáp ứng nhu cầu đa dạng và nâng tầm phong cách sống cho khách hàng.
@@ -48,7 +48,7 @@ const MainContent = () => {
             <p className="mb-4">
                 Slogan của chúng tôi, "Sống trọn chất mỹ, làm chủ tầm cao," là kim chỉ nam cho mọi hoạt động của tập đoàn, thể hiện khát vọng nâng tầm cuộc sống và khẳng định vị thế dẫn đầu trong ngành bất động sản. Với GENG, khách hàng không chỉ sở hữu một căn hộ, mà còn làm chủ một phong cách sống đẳng cấp, trọn vẹn và đầy tự hào.
             </p>
-        </main>
+        </div>
     );
 };
 
