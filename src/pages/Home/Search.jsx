@@ -8,38 +8,38 @@ const App = () => {
   const [ketQua, setKetQua] = useState([]);
   const [map, setMap] = useState(null);
 
-  const danhSachCanHo = [
-    { id: 1, ten: "Căn hộ A", viTri: "Trung tâm", gia: 1200, lat: 10.7769, lon: 106.7009 },
-    { id: 2, ten: "Căn hộ B", viTri: "Ngoại ô", gia: 1500, lat: 10.8231, lon: 106.6297 },
-    { id: 3, ten: "Căn hộ C", viTri: "Vùng ven", gia: 1000, lat: 10.8500, lon: 106.7600 },
+  const danhSachChungCu = [
+    { id: 1, ten: "Chung cư A", viTri: "Trung tâm", gia: 1200, lat: 10.7769, lon: 106.7009 },
+    { id: 2, ten: "Chung cư B", viTri: "Ngoại ô", gia: 1500, lat: 10.8231, lon: 106.6297 },
+    { id: 3, ten: "Chung cư C", viTri: "Vùng ven", gia: 1000, lat: 10.8500, lon: 106.7600 },
   ];
 
   const xuLyTimKiem = () => {
-    const ketQuaLoc = danhSachCanHo.filter(
-      (canHo) =>
-        canHo.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
-        canHo.viTri.toLowerCase().includes(timKiem.toLowerCase())
+    const ketQuaLoc = danhSachChungCu.filter(
+      (chungCu) =>
+        chungCu.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
+        chungCu.viTri.toLowerCase().includes(timKiem.toLowerCase())
     );
     setKetQua(ketQuaLoc);
     if (map) {
       map.graphics.removeAll();
-      ketQuaLoc.forEach((canHo) => {
+      ketQuaLoc.forEach((chungCu) => {
         map.graphics.add(
           new map.Graphic({
             geometry: {
               type: "point",
-              longitude: canHo.lon,
-              latitude: canHo.lat,
+              longitude: chungCu.lon,
+              latitude: chungCu.lat,
             },
             symbol: {
               type: "simple-marker",
               color: "blue",
               size: "10px",
             },
-            attributes: canHo,
+            attributes: chungCu,
             popupTemplate: {
-              title: canHo.ten,
-              content: `Vị trí: ${canHo.viTri}<br>Giá: $${canHo.gia}`,
+              title: chungCu.ten,
+              content: `Vị trí: ${chungCu.viTri}<br>Giá: $${chungCu.gia}`,
             },
           })
         );
@@ -65,10 +65,10 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-5">
       <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">Tìm kiếm căn hộ</h1>
+        <h1 className="text-xl font-bold mb-4 text-gray-800">Tìm kiếm chung cư</h1>
         <input
           type="text"
-          placeholder="Nhập tên hoặc vị trí căn hộ..."
+          placeholder="Nhập tên hoặc vị trí chung cư..."
           value={timKiem}
           onChange={(e) => setTimKiem(e.target.value)}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -83,16 +83,16 @@ const App = () => {
         <div className="mt-6">
           {ketQua.length > 0 ? (
             <ul className="space-y-4">
-              {ketQua.map((canHo) => (
+              {ketQua.map((chungCu) => (
                 <li
-                  key={canHo.id}
+                  key={chungCu.id}
                   className="p-4 border border-gray-300 rounded-lg shadow-sm"
                 >
                   <h2 className="text-lg font-semibold text-gray-700">
-                    {canHo.ten}
+                    {chungCu.ten}
                   </h2>
-                  <p className="text-gray-500">Vị trí: {canHo.viTri}</p>
-                  <p className="text-gray-500">Giá: ${canHo.gia}</p>
+                  <p className="text-gray-500">Vị trí: {chungCu.viTri}</p>
+                  <p className="text-gray-500">Giá: ${chungCu.gia}</p>
                 </li>
               ))}
             </ul>
