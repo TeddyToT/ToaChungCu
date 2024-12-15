@@ -136,7 +136,7 @@ const Header = () => {
     );
   } else {
     return (
-      <div className="w-full p-5 bg-white shadow-md shadow-slate-600 mb-10">
+      <div className="w-full p-5 bg-white shadow-md shadow-slate-600 mb-2">
         <div className=" h-auto place-items-center w-full flex flex-row justify-between font-bold text-xl">
           <div className="text-center w-1/5 h-auto flex border-bg-red col-lg justify-center items-center ">
             <Link to="/trang-chu">
