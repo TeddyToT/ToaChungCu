@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { loadModules } from "esri-loader";
-import "./index.css";
+// import "./index.css";
 
 const ChungCuDetails = ({ chungCu }) => (
   <div className="p-6 bg-white rounded-lg shadow-md">
@@ -12,7 +12,7 @@ const ChungCuDetails = ({ chungCu }) => (
   </div>
 );
 
-const App = () => {
+const Details = () => {
   const [selectedChungCu, setSelectedChungCu] = useState(null);
   const [map, setMap] = useState(null);
 
@@ -92,9 +92,9 @@ const App = () => {
     </div>
   );
 };
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default Details
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );

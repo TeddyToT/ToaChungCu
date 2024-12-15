@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { loadModules } from "esri-loader";
-import "./index.css";
 
-const App = () => {
+
+const Search = () => {
   const [timKiem, setTimKiem] = useState("");
   const [ketQua, setKetQua] = useState([]);
   const [map, setMap] = useState(null);
@@ -101,13 +101,13 @@ const App = () => {
           )}
         </div>
       </div>
-      <div id="mapView" className="mt-10 h-96 w-full rounded-lg shadow-lg"></div>
+      {/* <div id="mapView" className="mt-10 h-96 w-full rounded-lg shadow-lg"></div> */}
     </div>
   );
 };
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default Search;
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
