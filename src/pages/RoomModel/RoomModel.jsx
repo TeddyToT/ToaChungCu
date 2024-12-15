@@ -7,7 +7,7 @@ const RoomModel = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="flex flex-col items-center justify-center bg-gray-100 p-4">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
             </div>
             <ModelView />
