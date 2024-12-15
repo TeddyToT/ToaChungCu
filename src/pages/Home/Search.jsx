@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
+import { loadModules } from "esri-loader";
 import "./index.css";
 
 const App = () => {
   const [timKiem, setTimKiem] = useState("");
   const [ketQua, setKetQua] = useState([]);
+  const [map, setMap] = useState(null);
 
   const danhSachCanHo = [
-    { id: 1, ten: "Căn hộ A", viTri: "Trung tâm", gia: 1200 },
-    { id: 2, ten: "Căn hộ B", viTri: "Ngoại ô", gia: 1500 },
-    { id: 3, ten: "Căn hộ C", viTri: "Vùng ven", gia: 1000 },
+    { id: 1, ten: "Căn hộ A", viTri: "Trung tâm", gia: 1200, lat: 10.7769, lon: 106.7009 },
+    { id: 2, ten: "Căn hộ B", viTri: "Ngoại ô", gia: 1500, lat: 10.8231, lon: 106.6297 },
+    { id: 3, ten: "Căn hộ C", viTri: "Vùng ven", gia: 1000, lat: 10.8500, lon: 106.7600 },
   ];
 
   const xuLyTimKiem = () => {
@@ -19,7 +21,46 @@ const App = () => {
         canHo.viTri.toLowerCase().includes(timKiem.toLowerCase())
     );
     setKetQua(ketQuaLoc);
+    if (map) {
+      map.graphics.removeAll();
+      ketQuaLoc.forEach((canHo) => {
+        map.graphics.add(
+          new map.Graphic({
+            geometry: {
+              type: "point",
+              longitude: canHo.lon,
+              latitude: canHo.lat,
+            },
+            symbol: {
+              type: "simple-marker",
+              color: "blue",
+              size: "10px",
+            },
+            attributes: canHo,
+            popupTemplate: {
+              title: canHo.ten,
+              content: `Vị trí: ${canHo.viTri}<br>Giá: $${canHo.gia}`,
+            },
+          })
+        );
+      });
+    }
   };
+
+  useEffect(() => {
+    loadModules(["esri/Map", "esri/views/MapView", "esri/Graphic"]).then(
+      ([Map, MapView, Graphic]) => {
+        const mapInstance = new Map({ basemap: "streets-navigation-vector" });
+        const mapView = new MapView({
+          container: "mapView",
+          map: mapInstance,
+          center: [106.7009, 10.7769],
+          zoom: 12,
+        });
+        setMap({ mapInstance, mapView, Graphic });
+      }
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-5">
@@ -60,6 +101,7 @@ const App = () => {
           )}
         </div>
       </div>
+      <div id="mapView" className="mt-10 h-96 w-full rounded-lg shadow-lg"></div>
     </div>
   );
 };
