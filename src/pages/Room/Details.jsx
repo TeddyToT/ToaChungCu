@@ -6,20 +6,25 @@ import "swiper/css/free-mode";
 import { FreeMode, Thumbs } from "swiper/modules";
 import axios from "axios";
 import { AppContext } from "../../context/Contexts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
+
 const Details = () => {
   const { roomID, setRoomID, fetchRoomID } = useContext(AppContext);
   const [firstLoad, setFirstLoad] = useState(true);
-  const id = "67602fd792298e32fe6fe212";
+  const {id} = useParams()
+  const [phong, setPhong] = useState("")
   const [images, setImages] = useState([ 
   ]);
   const navigate = useNavigate()
   useEffect(() => {
     if (id && firstLoad) {
       fetchRoomID(id);
+      setPhong(id)
       setFirstLoad(false);
     }
-  }, [fetchRoomID, firstLoad]);
+  }, [fetchRoomID, firstLoad, id]);
 
   useEffect(() => {
     if (roomID.images) {
@@ -29,6 +34,13 @@ const Details = () => {
   }, [fetchRoomID, firstLoad, roomID.images]);
 
  
+  
+
+  const handleThue = () => {
+    const roomid = id; // Lấy giá trị id
+    navigate('/thanh-toan', { state: { roomid } });
+  };
+  
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null); // Swiper nhỏ
   const [swiperRef, setSwiperRef] = useState(null); // Swiper lớn
@@ -76,9 +88,9 @@ const Details = () => {
             </div>
           </div>
           <div className="w-1/4 flex flex-col items-center justify-center gap-10 text-lg font-bold">
-            <button onClick={() => navigate("/tim-kiem/:id/tao-hop-dong")} 
+            <button  onClick={handleThue} 
             className="border text-white hover:bg-orange-700  border-red-400 bg-[#ff5e1e] rounded-xl px-3 py-3 text-center w-5/6 h-1/4">
-              {" "}
+              
               THUÊ CĂN HỘ
             </button>
             <button onClick={() => navigate("/chi-tiet-phong")} 

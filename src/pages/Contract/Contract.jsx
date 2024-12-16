@@ -6,10 +6,11 @@ import "swiper/css/free-mode";
 import { FreeMode, Thumbs } from "swiper/modules";
 import axios from "axios";
 import { AppContext } from "../../context/Contexts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const Contract = () => {
+  const location = useLocation();
+  const { roomid } = location.state || {}; // Truy cập roomid từ state
 
-    const [familyName, setFamilyName] = useState("") 
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
@@ -18,17 +19,17 @@ const Contract = () => {
     userInfo, setUserInfo, fetchUserInfo
     } = useContext(AppContext);
   const [firstLoad, setFirstLoad] = useState(true);
-  const id = "6759e8174e506d595bad4042";
+
   const userId = "675ee07fcc1eae3ddecbfb2b";
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (id && firstLoad) {
-      fetchRoomID(id);
+    if (roomid && firstLoad) {
+      fetchRoomID(roomid);
       fetchUserInfo(userId)
       setFirstLoad(false);
     }
-  }, [fetchRoomID, fetchUserInfo, firstLoad]);
+  }, [fetchRoomID, fetchUserInfo, firstLoad, roomid]);
 
   useEffect(() => {
     if (userInfo) {

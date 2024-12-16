@@ -1,8 +1,10 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const RoomList = ({ rooms }) => {
+  const navigate = useNavigate()
 
-  const handleClick = (room) => {
+  const handleClick = (id) => {
+    navigate(`/tim-kiem/${id}`)
   };
 
   return (
@@ -10,7 +12,7 @@ const RoomList = ({ rooms }) => {
       {rooms.map((room) => (
         <div
           key={room._id}
-          onClick={() => handleClick(room)}
+          onClick={() => handleClick(room._id)}
           className="flex bg-white p-4 rounded shadow-md cursor-pointer transform transition duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
         >
           <img
