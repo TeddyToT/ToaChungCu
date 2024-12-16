@@ -123,7 +123,7 @@ const Search = () => {
                 if (filters.size && (parseFloat(room.size) < parseFloat(sizeRange[0]) || parseFloat(room.size) > parseFloat(sizeRange[1]))) {
                   return false;
                 }
-                if (filters.bedrooms && room.bedroom !== filters.bedrooms) {
+                if (Number(filters.bedrooms) && room.bedRoom !== Number(filters.bedrooms)) {
                   return false;
                 }
                 return true;

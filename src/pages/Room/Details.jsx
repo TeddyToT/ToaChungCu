@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom";
 const Details = () => {
   const { roomID, setRoomID, fetchRoomID } = useContext(AppContext);
   const [firstLoad, setFirstLoad] = useState(true);
-  const id = "6759e8174e506d595bad4042";
-
+  const id = "67602fd792298e32fe6fe212";
+  const [images, setImages] = useState([ 
+  ]);
   const navigate = useNavigate()
   useEffect(() => {
     if (id && firstLoad) {
@@ -20,21 +21,14 @@ const Details = () => {
     }
   }, [fetchRoomID, firstLoad]);
 
-  const [images, setImages] = useState([
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
-    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
-    
-  ]);
+  useEffect(() => {
+    if (roomID.images) {
+      console.log("hinh ảnh: ",roomID.images);
+      setImages(roomID.images)
+    }
+  }, [fetchRoomID, firstLoad, roomID.images]);
+
+ 
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null); // Swiper nhỏ
   const [swiperRef, setSwiperRef] = useState(null); // Swiper lớn

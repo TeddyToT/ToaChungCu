@@ -23,10 +23,10 @@ const SearchBar = ({ filters, setFilters }) => {
                 <SearchDropdown
                     label="Khoảng giá"
                     options={[
-                        { label: "Dưới 1 triệu", value: "0-1" },
-                        { label: "1 đến 5 triệu", value: "1-5" },
-                        { label: "5 đến 10 triệu", value: "5-10" },
-                        { label: "10 đến 20 triệu", value: "10-20" },
+                        { label: "Dưới 1 triệu", value: "0-1000000" },
+                        { label: "1 đến 5 triệu", value: "1000000-5000000" },
+                        { label: "5 đến 10 triệu", value: "5000000-10000000" },
+                        { label: "10 đến 20 triệu", value: "10000000-20000000" },
                     ]}
                     name="price"
                     value={filters.price}
