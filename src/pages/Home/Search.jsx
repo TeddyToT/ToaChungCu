@@ -1,113 +1,116 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom/client";
-import { loadModules } from "esri-loader";
-import "./index.css";
+import React from "react";
 
 const App = () => {
-  const [timKiem, setTimKiem] = useState("");
-  const [ketQua, setKetQua] = useState([]);
-  const [map, setMap] = useState(null);
-
-  const danhSachChungCu = [
-    { id: 1, ten: "Chung cư A", viTri: "Trung tâm", gia: 1200, lat: 10.7769, lon: 106.7009 },
-    { id: 2, ten: "Chung cư B", viTri: "Ngoại ô", gia: 1500, lat: 10.8231, lon: 106.6297 },
-    { id: 3, ten: "Chung cư C", viTri: "Vùng ven", gia: 1000, lat: 10.8500, lon: 106.7600 },
-  ];
-
-  const xuLyTimKiem = () => {
-    const ketQuaLoc = danhSachChungCu.filter(
-      (chungCu) =>
-        chungCu.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
-        chungCu.viTri.toLowerCase().includes(timKiem.toLowerCase())
-    );
-    setKetQua(ketQuaLoc);
-    if (map) {
-      map.graphics.removeAll();
-      ketQuaLoc.forEach((chungCu) => {
-        map.graphics.add(
-          new map.Graphic({
-            geometry: {
-              type: "point",
-              longitude: chungCu.lon,
-              latitude: chungCu.lat,
-            },
-            symbol: {
-              type: "simple-marker",
-              color: "blue",
-              size: "10px",
-            },
-            attributes: chungCu,
-            popupTemplate: {
-              title: chungCu.ten,
-              content: `Vị trí: ${chungCu.viTri}<br>Giá: $${chungCu.gia}`,
-            },
-          })
-        );
-      });
-    }
-  };
-
-  useEffect(() => {
-    loadModules(["esri/Map", "esri/views/MapView", "esri/Graphic"]).then(
-      ([Map, MapView, Graphic]) => {
-        const mapInstance = new Map({ basemap: "streets-navigation-vector" });
-        const mapView = new MapView({
-          container: "mapView",
-          map: mapInstance,
-          center: [106.7009, 10.7769],
-          zoom: 12,
-        });
-        setMap({ mapInstance, mapView, Graphic });
-      }
-    );
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gray-100 p-5">
-      <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">Tìm kiếm chung cư</h1>
-        <input
-          type="text"
-          placeholder="Nhập tên hoặc vị trí chung cư..."
-          value={timKiem}
-          onChange={(e) => setTimKiem(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          onClick={xuLyTimKiem}
-          className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-        >
-          Tìm kiếm
-        </button>
-
-        <div className="mt-6">
-          {ketQua.length > 0 ? (
-            <ul className="space-y-4">
-              {ketQua.map((chungCu) => (
-                <li
-                  key={chungCu.id}
-                  className="p-4 border border-gray-300 rounded-lg shadow-sm"
-                >
-                  <h2 className="text-lg font-semibold text-gray-700">
-                    {chungCu.ten}
-                  </h2>
-                  <p className="text-gray-500">Vị trí: {chungCu.viTri}</p>
-                  <p className="text-gray-500">Giá: ${chungCu.gia}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500">Không tìm thấy kết quả nào.</p>
-          )}
+    <div className="font-sans bg-gray-100">
+      {/* Header */}
+      <header className="bg-white shadow-md p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-2xl font-bold text-yellow-500">GEN.G</div>
+          <nav className="flex space-x-6">
+            <a href="#" className="hover:text-yellow-500">Trang Chủ</a>
+            <a href="#" className="text-yellow-500 font-semibold">Căn Hộ</a>
+            <a href="#" className="hover:text-yellow-500">Giới Thiệu</a>
+          </nav>
+          <div>
+            <button className="border px-4 py-1 rounded mr-2">Đăng Nhập</button>
+            <button className="bg-yellow-500 text-white px-4 py-1 rounded">Đăng Ký</button>
+          </div>
         </div>
-      </div>
-      <div id="mapView" className="mt-10 h-96 w-full rounded-lg shadow-lg"></div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto mt-6 flex gap-6">
+        {/* Filter Section */}
+        <aside className="w-1/4 bg-white p-4 rounded-md shadow-md">
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2">Lọc theo khoảng giá</h3>
+            <ul>
+              <li><input type="radio" name="price" /> <label>0 - 3 triệu</label></li>
+              <li><input type="radio" name="price" /> <label>3 - 5 triệu</label></li>
+              <li><input type="radio" name="price" /> <label>5 - 8 triệu</label></li>
+            </ul>
+          </div>
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2">Lọc theo diện tích</h3>
+            <ul>
+              <li><input type="radio" name="area" /> <label>0 - 40 m²</label></li>
+              <li><input type="radio" name="area" /> <label>40 - 60 m²</label></li>
+              <li><input type="radio" name="area" /> <label>60 - 80 m²</label></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">Lọc theo số phòng</h3>
+            <ul>
+              <li><input type="radio" name="rooms" /> <label>1 PN</label></li>
+              <li><input type="radio" name="rooms" /> <label>2 PN</label></li>
+              <li><input type="radio" name="rooms" /> <label>3 PN</label></li>
+            </ul>
+          </div>
+        </aside>
+
+        {/* Apartment List */}
+        <section className="w-3/4">
+          <div className="mb-4 flex space-x-4">
+            <select className="border px-4 py-2 rounded">
+              <option>Mức giá</option>
+              <option>0 - 3 triệu</option>
+              <option>3 - 5 triệu</option>
+            </select>
+            <select className="border px-4 py-2 rounded">
+              <option>Diện tích</option>
+              <option>40 - 60 m²</option>
+              <option>60 - 80 m²</option>
+            </select>
+            <select className="border px-4 py-2 rounded">
+              <option>Số phòng ngủ</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+
+          {/* Apartment Card */}
+          {Array(3).fill(0).map((_, index) => (
+            <div key={index} className="flex bg-white rounded-md shadow-md p-4 mb-4">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Apartment"
+                className="w-32 h-32 rounded-md"
+              />
+              <div className="ml-4">
+                <h3 className="font-semibold text-gray-800">
+                  Cho thuê căn hộ chung cư GEN.G Grandpark quận 9
+                </h3>
+                <p className="text-gray-500">3 PN • 2 WC • Chung cư</p>
+                <p className="text-red-500 font-bold">3,5 triệu/tháng</p>
+                <p className="text-gray-600">81 m²</p>
+              </div>
+            </div>
+          ))}
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white mt-6 p-6">
+        <div className="container mx-auto flex justify-between">
+          <div>
+            <h3 className="text-yellow-500 font-bold mb-2">GEN GROUP</h3>
+            <p>Địa chỉ: UIT</p>
+            <p>SĐT: +84 44444444</p>
+            <p>Email: gen@gmail.com</p>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-2">Liên kết</h4>
+            <ul>
+              <li>Trang chủ</li>
+              <li>Căn hộ</li>
+              <li>Thông tin</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default App;
