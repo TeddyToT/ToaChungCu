@@ -1,100 +1,124 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
-import { loadModules } from "esri-loader";
-import "./index.css";
-
-const ChungCuDetails = ({ chungCu }) => (
-  <div className="p-6 bg-white rounded-lg shadow-md">
-    <h2 className="text-2xl font-bold mb-4 text-gray-800">{chungCu.ten}</h2>
-    <p className="text-gray-600 mb-2">Vị trí: {chungCu.viTri}</p>
-    <p className="text-gray-600 mb-2">Giá: ${chungCu.gia}</p>
-    <p className="text-gray-600">Mô tả: Đây là một chung cư cao cấp với đầy đủ tiện nghi.</p>
-  </div>
-);
+import React from "react";
 
 const App = () => {
-  const [selectedChungCu, setSelectedChungCu] = useState(null);
-  const [map, setMap] = useState(null);
-
-  const danhSachChungCu = [
-    { id: 1, ten: "Chung cư A", viTri: "Trung tâm", gia: 1200, lat: 10.7769, lon: 106.7009 },
-    { id: 2, ten: "Chung cư B", viTri: "Ngoại ô", gia: 1500, lat: 10.8231, lon: 106.6297 },
-    { id: 3, ten: "Chung cư C", viTri: "Vùng ven", gia: 1000, lat: 10.8500, lon: 106.7600 },
-  ];
-
-  useEffect(() => {
-    loadModules(["esri/Map", "esri/views/MapView", "esri/Graphic", "esri/layers/GraphicsLayer"]).then(
-      ([Map, MapView, Graphic, GraphicsLayer]) => {
-        const mapInstance = new Map({ basemap: "streets-navigation-vector" });
-        const graphicsLayer = new GraphicsLayer();
-        mapInstance.add(graphicsLayer);
-
-        const mapView = new MapView({
-          container: "mapView",
-          map: mapInstance,
-          center: [106.7009, 10.7769],
-          zoom: 12,
-        });
-
-        danhSachChungCu.forEach((chungCu) => {
-          const pointGraphic = new Graphic({
-            geometry: {
-              type: "point",
-              longitude: chungCu.lon,
-              latitude: chungCu.lat,
-            },
-            symbol: {
-              type: "simple-marker",
-              color: "blue",
-              size: "10px",
-            },
-            attributes: chungCu,
-            popupTemplate: {
-              title: chungCu.ten,
-              content: `Vị trí: ${chungCu.viTri}<br>Giá: $${chungCu.gia}`,
-            },
-          });
-
-          pointGraphic.popupTemplate = {
-            title: chungCu.ten,
-            content: [
-              {
-                type: "fields",
-                fieldInfos: [
-                  { fieldName: "viTri", label: "Vị trí" },
-                  { fieldName: "gia", label: "Giá" },
-                ],
-              },
-            ],
-          };
-
-          graphicsLayer.add(pointGraphic);
-          pointGraphic.on("click", () => setSelectedChungCu(chungCu));
-        });
-
-        setMap(mapView);
-      }
-    );
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
-      <div className="w-full md:w-1/3 p-5">
-        {selectedChungCu ? (
-          <ChungCuDetails chungCu={selectedChungCu} />
-        ) : (
-          <div className="text-gray-500 text-center p-6">
-            <p>Chọn một chung cư trên bản đồ để xem thông tin chi tiết.</p>
+    <div className="bg-gray-100 font-sans">
+      {/* Header */}
+      <header className="bg-white shadow-md p-4">
+        <div className="flex justify-between items-center container mx-auto">
+          <div className="text-2xl font-bold text-yellow-600">GEN.G</div>
+          <nav className="space-x-4">
+            <a href="#" className="text-gray-700 hover:text-yellow-600">
+              Trang Chủ
+            </a>
+            <a href="#" className="text-gray-700 hover:text-yellow-600">
+              Căn Hộ
+            </a>
+            <a href="#" className="text-gray-700 hover:text-yellow-600">
+              Giới Thiệu
+            </a>
+          </nav>
+          <div className="space-x-2">
+            <button className="px-4 py-1 border border-gray-300 rounded-md">
+              Đăng Nhập
+            </button>
+            <button className="bg-yellow-500 text-white px-4 py-1 rounded-md">
+              Đăng Ký
+            </button>
           </div>
-        )}
-      </div>
-      <div id="mapView" className="w-full md:w-2/3 h-screen"></div>
+        </div>
+      </header>
+
+      {/* Apartment Section */}
+      <main className="container mx-auto p-6 bg-white shadow-lg my-6 rounded-md">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4">
+          Cho thuê căn hộ chung cư GEN.G Grandpark quận 9
+        </h1>
+
+        {/* Image Gallery */}
+        <div className="grid grid-cols-5 gap-2 mb-4">
+          <div className="col-span-3">
+            <img
+              src="apartment-main.jpg"
+              alt="Main"
+              className="w-full h-auto rounded-md"
+            />
+          </div>
+          <div className="col-span-2 grid grid-cols-2 gap-2">
+            {Array(4)
+              .fill(0)
+              .map((_, i) => (
+                <img
+                  key={i}
+                  src={`apartment-${i + 1}.jpg`}
+                  alt={`Gallery ${i + 1}`}
+                  className="w-full h-auto rounded-md"
+                />
+              ))}
+          </div>
+        </div>
+
+        {/* Price & Details */}
+        <p className="text-lg text-red-500 font-bold">3,5 triệu/tháng</p>
+        <p className="text-gray-600 mb-4">81 m²</p>
+
+        {/* Features Table */}
+        <table className="w-full border-t border-gray-200">
+          <tbody>
+            <tr>
+              <td className="p-2 text-gray-700">Số phòng ngủ:</td>
+              <td className="p-2 font-semibold text-gray-800">3 Phòng ngủ</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-gray-700">Số phòng vệ sinh:</td>
+              <td className="p-2 font-semibold text-gray-800">2 Phòng vệ sinh</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-gray-700">Diện tích:</td>
+              <td className="p-2 font-semibold text-gray-800">81 m²</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-gray-700">Giá thuê:</td>
+              <td className="p-2 font-semibold text-gray-800">3,5 triệu</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-gray-700">Tiện ích:</td>
+              <td className="p-2 font-semibold text-gray-800">2 Tháng</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Buttons */}
+        <div className="flex space-x-4 mt-6">
+          <button className="bg-orange-500 text-white px-4 py-2 rounded-md">
+            Thuê Căn Hộ
+          </button>
+          <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md">
+            Mô Hình 3D
+          </button>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white p-6 mt-6">
+        <div className="container mx-auto flex justify-between">
+          <div>
+            <h3 className="font-bold mb-2 text-yellow-500">GEN GROUP</h3>
+            <p>Địa chỉ: UIT</p>
+            <p>SĐT: +84 44444444</p>
+            <p>Email: gen@gmail.com</p>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-2">Liên kết</h4>
+            <ul>
+              <li>Trang chủ</li>
+              <li>Thông tin</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default App;
