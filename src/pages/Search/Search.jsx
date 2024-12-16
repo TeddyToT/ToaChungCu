@@ -1,6 +1,7 @@
 import React from "react";
 import FilterSidebar from "./FilterSidebar";
 import RoomList from "./RoomList";
+import SearchBar from "./SearchBar";
 
 const Search = () => {
   const [filters, setFilters] = React.useState({
@@ -42,11 +43,64 @@ const Search = () => {
       size: "150",
       bedrooms: "4",
     },
+    //add to 10
+    {
+      id: 5,
+      title: "Cho thuê căn hộ chung cư GENG Grandpark quận 9",
+      image: "",
+      price: "8.5",
+      size: "80",
+      bedrooms: "2",
+    },
+    {
+      id: 6,
+      title: "Cho thuê căn hộ chung cư Vinhomes Grand Park quận 9",
+      image: "",
+      price: "12",
+      size: "100",
+      bedrooms: "3",
+    },
+    {
+      id: 7,
+      title: "Cho thuê căn hộ chung cư The Sun Avenue quận 2",
+      image: "",
+      price: "15",
+      size: "120",
+      bedrooms: "3",
+    },
+    {
+      id: 8,
+      title: "Cho thuê căn hộ chung cư Vinhomes Central Park quận Bình Thạnh",
+      image: "",
+      price: "20",
+      size: "150",
+      bedrooms: "4",
+    },
+    {
+      id: 9,
+      title: "Cho thuê căn hộ chung cư GENG Grandpark quận 9",
+      image: "",
+      price: "8.5",
+      size: "80",
+      bedrooms: "2",
+    },
+    {
+      id: 10,
+      title: "Cho thuê căn hộ chung cư Vinhomes Grand Park quận 9",
+      image: "",
+      price: "12",
+      size: "100",
+      bedrooms: "3",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="mb-4">
+        <SearchBar 
+          filters={filters}
+          setFilters={setFilters}
+        />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="col-span-1">

@@ -7,6 +7,7 @@ const FilterSidebar = ({filters, setFilters}) => {
       ...filters,
       [key]: option.value,
     });
+    console.log(option.value);
   };
 
   const priceValueToLabel = (value) => {
@@ -20,7 +21,7 @@ const FilterSidebar = ({filters, setFilters}) => {
   }
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
+    <div className="bg-white p-4 rounded shadow-md sticky top-4">
       {/* Display Selected Filters */}
       <div className="mt-6 p-4 bg-gray-100 rounded">
         <h3 className="font-semibold mb-2">Bộ lọc đã chọn:</h3>
