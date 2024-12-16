@@ -9,7 +9,7 @@ import { AppContext } from "../../context/Contexts";
 import { useNavigate } from "react-router-dom";
 const Contract = () => {
 
-    const [familyName, setFamilyName] = useState("")
+    const [familyName, setFamilyName] = useState("") 
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
