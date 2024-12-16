@@ -16,6 +16,8 @@ import Introduction from './pages/Introduction/Introduction'
 import RoomModel from './pages/RoomModel/RoomModel'
 import Search from './pages/Home/Search';
 import Details from './pages/Home/Details';
+import Account from './pages/Account/Account';
+
 function App() {
 	const [count, setCount] = useState(0)
 
@@ -35,6 +37,7 @@ function App() {
               <Route path="/chi-tiet-phong" element={<RoomModel />} />
               <Route path="/dang-nhap" element={<Login />} />
               <Route path="/dang-ky" element={<SignUp />} />
+			  <Route path="/thong-tin" element={<Account />} />
               <Route path="/tim-kiem" element={<Search />} />
               <Route path="/tim-kiem/:id" element={<Details />} />
               
