@@ -9,7 +9,7 @@ const Header = () => {
 
   const location = useLocation();
 
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [userDropdown, setUserDropdown] = useState(false);
   const navigate = useNavigate();
   function toogleUserDropdown() {
@@ -60,7 +60,7 @@ const Header = () => {
               </div>
 
               <div className="">
-                <Link to="/">
+                <Link to="/tim-kiem">
                   <a
                     href="#"
                     className="cursor-pointer hover:text-red-500 text-white"
@@ -95,7 +95,7 @@ const Header = () => {
                       ref={userRef}
                       className="mt-2 bg-slate-50 rounded-xl w-1/2 inset-x-32 absolute flex flex-col justify-center items-center"
                     >
-                      <ul className="w-full font-semibold text-white">
+                      <ul className="w-full font-semibold text-black">
                         <Link to="/">
                           <li className="w-full rounded-md py-5 hover:text-zinc-100 hover:bg-cyan-700 pl-2 text-sm">
                             Thông tin tài khoản
@@ -119,11 +119,15 @@ const Header = () => {
                 </div>
               ) : (
                 <div className="w-full  flex flex-row gap-10 text-white">
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-nhap")}
+                   className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng nhập
                   </button>
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-ky")}
+                  className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng ký
                   </button>
@@ -167,7 +171,7 @@ const Header = () => {
               </div>
 
               <div className="">
-                <Link to="/">
+                <Link to="/tim-kiem">
                   <a
                     href="#"
                     className="cursor-pointer hover:text-red-500  text-black"
@@ -226,11 +230,14 @@ const Header = () => {
                 </div>
               ) : (
                 <div className="w-full  flex flex-row gap-10">
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-nhap")} className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng nhập
                   </button>
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-ky")}
+                  className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng ký
                   </button>
