@@ -34,7 +34,6 @@ const Contract = () => {
     if (userInfo) {
         if(userInfo.name)
         {
-            setFamilyName(userInfo.name)
         setName(userInfo.name)
         }
         if(userInfo.phone)
@@ -89,36 +88,26 @@ const Contract = () => {
           <h2 className="font-bold text-xl py-5">Thông tin liên hệ</h2>
           <div className="flex flex-col w-full gap-5 p-5 bg-white rounded-lg shadow-xl">
             <div className="flex flex-row w-full gap-3">
-              <div className="flex flex-col w-1/2 gap-1">
-                <p className="px-2 font-semibold">Họ (VD: Nguyen)</p>
-                <input
-                value={familyName}
-                  type="text"
-                  className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
-                />
-                <p className=" px-2 text-sm text-gray-400">
-                  Như trên CCCD (không dấu)
-                </p>
-              </div>
-              <div className="flex flex-col w-1/2 gap-1">
-                <p className="px-2 font-semibold">
-                  Tên đệm & Tên (vd: Thi Ngoc Anh)
-                </p>
+              <div className="flex flex-col w-full gap-1">
+                <p className="px-2 font-semibold">Họ Tên (VD: Nguyễn Thị Ngọc Anh)</p>
                 <input
                 value={name}
+                onChange={(e)=>setName(e.target.value)}
                   type="text"
-                  className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
+                  className="uppercase w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
                 <p className=" px-2 text-sm text-gray-400">
-                  Như trên CCCD (không dấu)
+                  Như trên CCCD
                 </p>
               </div>
+              
             </div>
             <div className="flex flex-row w-full gap-3">
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Điện thoại di động</p>
                 <input
                 value={phone}
+                onChange={(e)=>setPhone(e.target.value)}
                   type="text"
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
@@ -127,6 +116,7 @@ const Contract = () => {
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Email</p>
                 <input
+                onChange={(e)=>setEmail(e.target.value)}
                 value={email}
                   type="text"
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
@@ -193,7 +183,7 @@ const Contract = () => {
                   value={monthsDeposit}
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-                <p className=" px-2 text-sm text-gray-400">Số tháng cần cọc</p>
+                <p className=" px-2 text-sm text-gray-400">Số tháng cần cọc (Trên 3 tháng)</p>
               </div>
             </div>
           </div>

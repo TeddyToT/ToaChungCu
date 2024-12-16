@@ -27,6 +27,13 @@ const Details = () => {
     "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
     "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
     "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
+    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
+    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
+    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
+    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
+    "https://www.xotels.com/wp-content/uploads/2022/07/Executive-Room-XOTELS.webp",
+    "https://www.decorpot.com/images/blogimage1361284108interior-designs-for-master-bedroom.jpg",
+    
   ]);
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null); // Swiper nhỏ
@@ -56,7 +63,7 @@ const Details = () => {
                 ))}
               </Swiper>
             </div>
-            <div className="hidden md:flex md:w-1/2 h-[calc(100vh/2)] overflow-y-auto no-scrollbar">
+            <div className="hidden md:flex md:w-1/2 h-[calc(100vh/2)] overflow-y-auto ">
               <div className="grid grid-cols-2 gap-2 h-full">
                 {images.map((image, index) => (
                   <div
