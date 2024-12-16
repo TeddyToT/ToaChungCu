@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 const FilterSection = ({ title, options, selectedValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -23,11 +24,11 @@ const FilterSection = ({ title, options, selectedValue, onChange }) => {
                 <input
                   type="radio"
                   name={title} // Unique name per filter
-                  value={option}
-                  checked={selectedValue === option}
+                  value={option.label}
+                  checked={selectedValue === option.value}
                   onChange={() => onChange(option)} // Update parent state
                 />{" "}
-                {option}
+                {option.label}
               </label>
             </li>
           ))}
