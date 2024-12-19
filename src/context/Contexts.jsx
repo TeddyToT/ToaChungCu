@@ -7,15 +7,12 @@ export const AppProvider = ({ children }) => {
   // const[email, setEmail] = useState("")
 
   const [users, setUsers] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [manufacturers, setManufacturers] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [carts, setCarts] = useState([]);
-  const [shop, setShop] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [userCart, setUserCart] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [roomID, setRoomID] = useState([]);
+  const [contracts , setContracts ] = useState([]);
+  const [userContract, setUserContract] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
+  const [detailContract, setDetailContract] = useState([]);
   const id = localStorage.getItem("id")
 
   
@@ -25,7 +22,7 @@ export const AppProvider = ({ children }) => {
         return;
     }
 
-    axios.get(`http://localhost/be-shopbangiay/api/user.php?userId=` + id)
+    axios.get(`http://localhost:8081/v1/api/getUser/` + id)
         .then((res) => {
           setUserInfo(res.data);
             console.log(res.data);
@@ -36,15 +33,11 @@ export const AppProvider = ({ children }) => {
         });
 };
 
-  const fetchCartUser = (id) => {
-      if (!id) {
-          console.log("Không có user");
-          return;
-      }
+  const fetchRoomID = (id) => {
 
-      axios.get(`http://localhost/be-shopbangiay/api/cart.php?userId=` + id)
+      axios.get(`http://localhost:8081/v1/api/getRoom/` + id)
           .then((res) => {
-              setUserCart(res.data);
+              setRoomID(res.data);
               console.log(res.data);
               return
           })
@@ -53,11 +46,11 @@ export const AppProvider = ({ children }) => {
           });
   };
 
-  const fetchProducts = () => {
+  const fetchRooms = () => {
     axios
-      .get("http://localhost/be-shopbangiay/api/product.php")
+      .get("http://localhost:8081/v1/api/getAllRoom")
       .then((res) => {
-        setProducts(res.data);
+        setRooms(res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -65,20 +58,46 @@ export const AppProvider = ({ children }) => {
       });
   };
 
-  const fetchCategories = () => {
+  const fetchContracts = () => {
     axios
-      .get("http://localhost/be-shopbangiay/api/category.php")
+      .get("http://localhost:8081/v1/api/getAllContract")
       .then((res) => {
-        setCategories(res.data);
+        setContracts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const fetchUserContract = (id) => {
+
+    axios.get(`http://localhost:8081/v1/api/getContractByUserId/` + id)
+        .then((res) => {
+          setUserContract(res.data);
+            console.log(res.data);
+            return
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+const fetchDetailContract = (id) => {
+
+  axios.get(`http://localhost:8081/v1/api/getContractById/` + id)
+      .then((res) => {
+        setDetailContract(res.data);
+          console.log(res.data);
+          return
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+};
+
 
   const fetchUsers = () => {
     axios
-      .get("http://localhost/be-shopbangiay/api/user.php")
+      .get("http://localhost:8081/v1/api/getAllUser")
       .then((res) => {
         setUsers(res.data);
       })
@@ -87,114 +106,36 @@ export const AppProvider = ({ children }) => {
       });
   };
 
-  const fetchManufacturers = () => {
-    axios
-      .get("http://localhost/be-shopbangiay/api/manufacturer.php")
-      .then((res) => {
-        setManufacturers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const fetchOrders = () => {
-    axios
-      .get("http://localhost/be-shopbangiay/api/invoice.php")
-      .then((res) => {
-        setOrders(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const fetchCarts = () => {
-    axios
-      .get("http://localhost/be-shopbangiay/api/cart.php")
-      .then((res) => {
-        setCarts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const fetchShop = () => {
-    axios
-      .get("http://localhost/be-shopbangiay/api/shop.php")
-      .then((res) => {
-        setShop(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const fetchBanners = () => {
-    axios
-      .get("http://localhost/be-shopbangiay/api/banner.php")
-      .then((res) => {
-        setBanners(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  
 
   useEffect(() => {
-    fetchProducts();
-    fetchCategories();
+    fetchRooms();
+    fetchContracts();
     fetchUsers();
-    fetchOrders();
-    fetchManufacturers();
-    fetchCarts();
-    fetchShop();
-    fetchBanners();
+
   }, []);
 
-  useEffect(() => {
-    if (!id) {
-      console.log("User is not logged in. Redirecting to login.");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!id) {
+  //     console.log("User is not logged in. Redirecting to login.");
+  //     return;
+  //   }
 
-    fetchCartUser(id);
-    fetchUserInfo(id)
-  }, [id]);
+  //   fetchCartUser(id);
+  //   fetchUserInfo(id)
+  // }, [id]);
 
   return (
     <AppContext.Provider
       value={{
-        products,
-        setProducts,
-        fetchProducts,
-        categories,
-        setCategories,
-        fetchCategories,
-        users,
-        setUsers,
-        fetchUsers,
-        orders,
-        setOrders,
-        fetchOrders,
-        manufacturers,
-        setManufacturers,
-        fetchManufacturers,
-        carts,
-        setCarts,
-        fetchCarts,
-        shop,
-        setShop,
-        fetchShop,
-        banners,
-        setBanners,
-        fetchBanners,
-        userCart,
-        fetchCartUser,
-        userInfo,
-        setUserInfo,
-        fetchUserInfo
+        users, setUsers, fetchUsers,
+        rooms, setRooms, fetchRooms,
+        roomID, setRoomID, fetchRoomID,
+        contracts , setContracts, fetchContracts,
+        userContract, setUserContract, fetchUserContract,
+        userInfo, setUserInfo, fetchUserInfo,
+        detailContract, setDetailContract, fetchDetailContract
+
       }}
     >
       {children}

@@ -5,11 +5,11 @@ import axios from "axios";
 // import {NavLink} from "react-router"
 import logo from "../../assets/react.svg";
 const Header = () => {
-  const userID = localStorage.getItem("id");
+  const userID = localStorage.getItem("userID");
 
   const location = useLocation();
 
-  const [isLogin, setIsLogin] = useState(false);
+ 
   const [userDropdown, setUserDropdown] = useState(false);
   const navigate = useNavigate();
   function toogleUserDropdown() {
@@ -60,7 +60,7 @@ const Header = () => {
               </div>
 
               <div className="">
-                <Link to="/">
+                <Link to="/tim-kiem">
                   <a
                     href="#"
                     className="cursor-pointer hover:text-red-500 text-white"
@@ -85,18 +85,18 @@ const Header = () => {
               </div>
             </div>
             <div className="w-1/3 flex  justify-center items-center relative">
-              {isLogin ? (
+              {userID ? (
                 <div className="relative w-full">
-                  <div className="flex justify-center">
+                  <div className="flex justify-center cursor-pointer">
                     <FaUser size={50} onClick={toogleUserDropdown} />
                   </div>
                   {userDropdown && (
                     <div
                       ref={userRef}
-                      className="mt-2 bg-slate-50 rounded-xl w-1/2 inset-x-32 absolute flex flex-col justify-center items-center"
+                      className="z-50 absolute mt-2 bg-slate-50 rounded-xl w-1/2 inset-x-32 flex flex-col justify-center items-center"
                     >
-                      <ul className="w-full font-semibold text-white">
-                        <Link to="/">
+                      <ul className="w-full font-semibold text-black">
+                        <Link to="/tai-khoan">
                           <li className="w-full rounded-md py-5 hover:text-zinc-100 hover:bg-cyan-700 pl-2 text-sm">
                             Thông tin tài khoản
                           </li>
@@ -119,11 +119,15 @@ const Header = () => {
                 </div>
               ) : (
                 <div className="w-full  flex flex-row gap-10 text-white">
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-nhap")}
+                   className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng nhập
                   </button>
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-ky")}
+                  className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng ký
                   </button>
@@ -167,10 +171,14 @@ const Header = () => {
               </div>
 
               <div className="">
-                <Link to="/">
+                <Link to="/tim-kiem">
                   <a
                     href="#"
-                    className="cursor-pointer hover:text-red-500  text-black"
+                    className={`cursor-pointer hover:text-red-500  ${
+                      location.pathname === "/tim-kiem"
+                        ? "border-b-2 border-black hover:border-red-500 pb-2"
+                        : ""
+                    }`}
                   >
                     CĂN HỘ
                   </a>
@@ -182,7 +190,7 @@ const Header = () => {
                     href="#"
                     className={`cursor-pointer hover:text-red-500  ${
                       location.pathname === "/gioi-thieu"
-                        ? "underline"
+                        ? "border-b-2 border-black hover:border-red-500 pb-2"
                         : ""
                     }`}
                   >
@@ -192,15 +200,15 @@ const Header = () => {
               </div>
             </div>
             <div className="w-1/3 flex  justify-center items-center relative">
-              {isLogin ? (
+              {userID ? (
                 <div className="relative w-full">
-                  <div className="flex justify-center">
+                  <div className="flex justify-center cursor-pointer">
                     <FaUser size={50} onClick={toogleUserDropdown} />
                   </div>
                   {userDropdown && (
                     <div
                       ref={userRef}
-                      className="mt-2 bg-slate-50 rounded-xl w-1/2 inset-x-32 absolute flex flex-col justify-center items-center"
+                      className="mt-2 z-50 bg-slate-50 rounded-xl w-1/2 inset-x-32 absolute flex flex-col justify-center items-center"
                     >
                       <ul className="w-full font-semibold">
                         <Link to="/">
@@ -226,11 +234,14 @@ const Header = () => {
                 </div>
               ) : (
                 <div className="w-full  flex flex-row gap-10">
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-nhap")} className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng nhập
                   </button>
-                  <button className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+                  <button
+                  onClick={()=>navigate("/dang-ky")}
+                  className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
                     {" "}
                     Đăng ký
                   </button>
