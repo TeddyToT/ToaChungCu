@@ -12,6 +12,7 @@ export const AppProvider = ({ children }) => {
   const [contracts , setContracts ] = useState([]);
   const [userContract, setUserContract] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
+  const [detailContract, setDetailContract] = useState([]);
   const id = localStorage.getItem("id")
 
   
@@ -69,7 +70,7 @@ export const AppProvider = ({ children }) => {
   };
   const fetchUserContract = (id) => {
 
-    axios.get(`http://localhost:8081/v1/api/getContract/` + id)
+    axios.get(`http://localhost:8081/v1/api/getContractByUserId/` + id)
         .then((res) => {
           setUserContract(res.data);
             console.log(res.data);
@@ -78,6 +79,19 @@ export const AppProvider = ({ children }) => {
         .catch((err) => {
             console.log(err);
         });
+};
+
+const fetchDetailContract = (id) => {
+
+  axios.get(`http://localhost:8081/v1/api/getContractById/` + id)
+      .then((res) => {
+        setDetailContract(res.data);
+          console.log(res.data);
+          return
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 };
 
 
@@ -119,7 +133,8 @@ export const AppProvider = ({ children }) => {
         roomID, setRoomID, fetchRoomID,
         contracts , setContracts, fetchContracts,
         userContract, setUserContract, fetchUserContract,
-        userInfo, setUserInfo, fetchUserInfo
+        userInfo, setUserInfo, fetchUserInfo,
+        detailContract, setDetailContract, fetchDetailContract
 
       }}
     >

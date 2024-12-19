@@ -7,6 +7,7 @@ import { FreeMode, Thumbs } from "swiper/modules";
 import axios from "axios";
 import { AppContext } from "../../context/Contexts";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 const Contract = () => {
   const location = useLocation();
   const { roomid } = location.state || {}; // Truy cập roomid từ state
@@ -20,16 +21,16 @@ const Contract = () => {
     } = useContext(AppContext);
   const [firstLoad, setFirstLoad] = useState(true);
 
-  const userId = "675ee07fcc1eae3ddecbfb2b";
+  const userID = localStorage.getItem("userID");
 
   const navigate = useNavigate();
   useEffect(() => {
     if (roomid && firstLoad) {
       fetchRoomID(roomid);
-      fetchUserInfo(userId)
+      fetchUserInfo(userID)
       setFirstLoad(false);
     }
-  }, [fetchRoomID, fetchUserInfo, firstLoad, roomid]);
+  }, [fetchRoomID, fetchUserInfo, firstLoad, roomid, userID]);
 
   useEffect(() => {
     if (userInfo) {
@@ -49,8 +50,66 @@ const Contract = () => {
         
     },
    [userInfo]);
+   const formatYMDtoDMY = (dateString) => {
+    if (!dateString)
+      return ""
+    console.log(selectedDate);
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+    
+  };
+  useEffect(() => {
+    const verifyPayment = async () => {
+        const params = new URLSearchParams(window.location.search);
+        const extraData = params.get("extraData");
+        let data;
 
+        try {
+            data = extraData ? JSON.parse(decodeURIComponent(extraData)) : undefined;
+        } catch (error) {
+            console.error("Invalid extraData:", error);
+            toast.error("Dữ liệu thanh toán không hợp lệ");
+            return;
+        }
 
+        if (params.get("orderId")) {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState(null, "", cleanUrl);
+
+            if (params.get("resultCode") === "0") {
+                try {
+                    const res = await axios.post(`http://localhost:8081/v1/api/addContract`, {
+                        userId: data.userId,
+                        roomId: data.roomId._id,
+                        month: data.month,
+                        total: data.total,
+                        deposit: data.roomId.price * data.month,
+                        startDay: data.startDay,
+                        endDay: data.endDay,
+                        name: data.name,
+                        phone: data.phone,
+                        email: data.email,
+                        state: data.state,
+
+                    });
+
+                    if (res.data.success) {
+                        toast.error(res.data?.message || "Lỗi hệ thống, thử lại sau");
+                        return;
+                    }
+
+                    toast.success("Tạo hợp đồng thành công");
+                } catch (error) {
+                    console.error("API Error:", error);
+                    toast.error("Không thể tạo hợp đồng . Vui lòng thử lại.",);
+                }
+            } else {
+                toast.error("Thanh toán thất bại");
+            }
+        }
+    };
+    verifyPayment();
+}, []);
   const [selectedDate, setSelectedDate] = useState("");
   const [monthsToAdd, setMonthsToAdd] = useState(0);
   const [resultDate, setResultDate] = useState("");
@@ -60,7 +119,6 @@ const Contract = () => {
       try {
         const date = new Date(selectedDate);
 
-        // Cộng thêm số tháng vào ngày ban đầu
         const year = date.getFullYear();
         const month = date.getMonth() + parseInt(monthsToAdd);
 
@@ -69,7 +127,6 @@ const Contract = () => {
         const formattedDate = date.toISOString().split("T")[0];
         setResultDate(formattedDate);
 
-        // Tính số tháng cần cọc (nửa giá trị monthsToAdd)
         const deposit = Math.floor(monthsToAdd / 2);
         setMonthsDeposit(deposit); // Lưu vào state
 
@@ -81,6 +138,33 @@ const Contract = () => {
       }
     }
   }, [selectedDate, monthsToAdd, resultDate]);
+
+
+
+  const handlePayment =()=>{
+    axios.post('http://localhost:8081/v1/api/payment', {
+
+      amount: (Number(roomID.price) * monthsDeposit),
+      orderInfo: "Thanh toán tiền cọc",
+      roomId: roomID,
+      userId: userID,
+      name: name,
+      phone: phone,
+      email: email,
+      month: monthsToAdd,
+      total: (Number(roomID.price) * monthsToAdd),
+      startDay:formatYMDtoDMY(selectedDate),
+      endDay: formatYMDtoDMY(resultDate)
+  })
+
+      .then((res) => {
+          window.location.href = res.data.payUrl;
+      })
+      .catch((e) => {
+          console.log(e)
+      })
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -139,6 +223,7 @@ const Contract = () => {
                 <p className="px-2 font-semibold">Chọn ngày bắt đầu thuê</p>
                 <input
                   type="date"
+                  placeholder="dd/MM/yyyy"
                   onChange={(e) => setSelectedDate(e.target.value)}
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
@@ -169,7 +254,7 @@ const Contract = () => {
                 <input
                   disabled
                   type="text"
-                  value={resultDate}
+                  value={formatYMDtoDMY(resultDate)}
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
                 <p className=" px-2 text-sm text-gray-400">
@@ -222,7 +307,7 @@ const Contract = () => {
               </div>
               <p className="w-full md:w-2/3 2xl:w-1/3 place-self-end  text-right"> Bằng việc nhấn thanh toán bạn đồng ý <span><a className="text-blue-500" href="#">Terms & Conditions</a></span> và <span><a className="text-blue-500" href="#">Privacy Policy.</a></span></p>
 
-              <button onClick={() => navigate("/tim-kiem/:id/tao-hop-dong")} 
+              <button onClick={handlePayment} 
             className="border font-bold text-white hover:bg-orange-700  border-red-400 bg-[#ff5e1e] rounded-xl px-3 py-3 text-center place-self-end w-full sm:w-1/3">
               {" "}
               THANH TOÁN
