@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls } from "@react-three/drei";
 
 const ModelView = () => {
-    const model = useGLTF("/model/room.gltf");
+    const model = useGLTF("/model/room.glb");
 
     return (
         <>
@@ -26,7 +26,12 @@ const ModelView = () => {
                         enablePan={false} 
                     />
                     <primitive object={model.scene} scale={1} />
-                    <ambientLight intensity={0.5} />
+                    <ambientLight intensity={1} />
+                    <directionalLight 
+                        intensity={1} 
+                        position={[10, 10, 10]} 
+                        castShadow 
+                    />
                 </Canvas>
             </div>
         </>
