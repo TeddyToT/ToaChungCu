@@ -83,7 +83,7 @@ const Contract = () => {
                         roomId: data.roomId._id,
                         month: data.month,
                         total: data.total,
-                        deposit: data.roomId.price * data.month,
+                        deposit: data.roomId.price * Math.floor(data.month / 2),
                         startDay: data.startDay,
                         endDay: data.endDay,
                         name: data.name,

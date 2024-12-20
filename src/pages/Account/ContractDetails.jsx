@@ -45,16 +45,24 @@ const ContractDetails = () => {
       }
       if (detailContract.email) setEmail(detailContract.email);
     }
-    console.log("cứu tôi: ",detailContract.roomId);
+    console.log("cứu tôi: ", detailContract.roomId);
   }, [detailContract]);
 
-  const formatYMDtoDMY = (dateString) => { 
+  const formatYMDtoDMY = (dateString) => {
     if (!dateString) return "";
     console.log(selectedDate);
     const [year, month, day] = dateString.split("-");
     return `${day}/${month}/${year}`;
   };
 
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const time = date.toTimeString().split(" ")[0];
+    return `${day}/${month}/${year} ${time}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -64,16 +72,12 @@ const ContractDetails = () => {
           <div className="flex flex-col w-full gap-5 p-5 bg-white rounded-lg shadow-xl">
             <div className="flex flex-row w-full gap-3">
               <div className="flex flex-col w-full gap-1">
-                <p className="px-2 font-semibold">
-                  Họ Tên (VD: Nguyễn Thị Ngọc Anh)
-                </p>
                 <input
                   value={name}
                   disabled
                   type="text"
                   className="uppercase w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-                <p className=" px-2 text-sm text-gray-400">Như trên CCCD</p>
               </div>
             </div>
             <div className="flex flex-row w-full gap-3">
@@ -85,7 +89,6 @@ const ContractDetails = () => {
                   type="text"
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-                <p className=" px-2 text-sm text-gray-400">Ví dụ: 0904444444</p>
               </div>
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Email</p>
@@ -95,9 +98,6 @@ const ContractDetails = () => {
                   type="text"
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-                <p className=" px-2 text-sm text-gray-400">
-                  Ví dụ: email@example.com
-                </p>
               </div>
             </div>
             <div className="flex flex-row"></div>
@@ -105,17 +105,31 @@ const ContractDetails = () => {
         </div>
 
         <div className="w-4/6 mt-5">
-          <h2 className="font-bold text-xl py-5">Thời gian thuê căn hộ</h2>
+          <h2 className="font-bold text-xl py-5">Thông tin chi tiết hợp đồng #{detailContract?._id}</h2>
           <div className="flex flex-col w-full gap-5 p-5 bg-white rounded-lg shadow-xl">
+            
+          <div className="flex flex-col w-full gap-1">
+                <p className="px-2 font-semibold">Thông tin phòng</p>
+                <div className="px-4 py-4 flex flex-row w-full gap-3 border-stroke border rounded-lg">
+                <p className=" font-semibold w-2/3">
+                  Căn hộ chung cư Phòng số{" "}
+                  {detailContract?.roomId?.roomNumber || "N/A"} - Tầng{" "}
+                  {detailContract?.roomId?.floor || "N/A"}
+                </p>
+
+                <p className="w-1/3 px-2 font-semibold text-end">
+                  {Number(detailContract?.roomId?.price).toLocaleString()}VNĐ /
+                  tháng
+                </p>
+              </div>
+              </div>
+
             <div className="flex flex-row w-full gap-3">
               <div className="flex flex-col w-1/2 gap-1">
-                <p className="px-2 font-semibold">ngày bắt đầu thuê</p>
-                <input
-                disabled
-                  type="text"
-                  value={detailContract.startDay}
-                  className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
-                />
+                <p className="px-2 font-semibold">Ngày bắt đầu thuê</p>
+                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                  {formatDate(detailContract.startDay)}
+                </p>
               </div>
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Số tháng thuê</p>
@@ -126,64 +140,45 @@ const ContractDetails = () => {
                   value={detailContract.month}
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-
-                <p className=" px-2 text-sm text-gray-400">Số tháng thuê</p>
               </div>
             </div>
 
             <div className="flex flex-row w-full gap-3">
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Ngày hết hạn dự kiến</p>
-                <input
-                  disabled
-                  type="text"
-                  value={detailContract.endDay}
-                  className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
-                />
-
+                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                  {formatDate(detailContract.endDay)}
+                </p>
               </div>
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Số tiền cọc</p>
-                <input
-                  disabled
-                  type="text"
-                  value={detailContract.deposit}
-                  className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
-                />
-
+                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                  {detailContract.deposit?.toLocaleString()} VNĐ
+                </p>
               </div>
+            </div>
+
+            <div className="flex flex-row w-full gap-3">
+              <div className="flex flex-col w-1/2 gap-1">
+                <p className="px-2 font-semibold">Tổng giá tiền:</p>
+                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                  {detailContract.total?.toLocaleString()} VNĐ
+                </p>
+              </div>
+              <div className="flex flex-col w-1/2 gap-1">
+                <p className="px-2 font-semibold">Trạng thái hợp đồng</p>
+                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                  {detailContract.state} 
+                </p>
+              </div>
+            </div>
+           
+
               
-            </div>
           </div>
         </div>
 
-        <div className="w-4/6 mt-5">
-          <h2 className="font-bold text-xl py-5">Chi tiết phòng</h2>
-          <div className="flex flex-col w-full gap-5 p-5 bg-white rounded-lg shadow-xl">
-            <div className="w-full flex flex-col gap-5 border-b-2 border-gray-700 pb-5">
-              <div className="flex flex-row w-full gap-3">
-              <p className="px-2 font-semibold w-1/2">
-  Căn hộ chung cư Phòng số {detailContract?.roomId?.roomNumber || "N/A"} - Tầng{" "}
-  {detailContract?.roomId?.floor || "N/A"}
-</p>
-
-
-                <p className="w-1/2 px-2 font-semibold text-end">
-                  {Number(detailContract?.roomId?.price).toLocaleString()}VNĐ / tháng
-                </p>
-              </div>
-
-            </div>
-            <div className="w-full flex flex-col gap-5 ">
-              <div className="flex flex-row w-full gap-3">
-                <p className="px-2 font-semibold w-1/2">Tổng giá tiền</p>
-                <p className="w-1/2 px-2 font-semibold text-end">
-                  {Number(detailContract.total).toLocaleString()}VNĐ
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </div>
   );
