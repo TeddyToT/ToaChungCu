@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import axios from "axios";
 // import {NavLink} from "react-router"
-import logo from "../../assets/react.svg";
+import logo from "../../assets/images/geng.png";
+import logoBlack from "../../assets/images/gengBlack.png";
 const Header = () => {
   const userID = localStorage.getItem("userID");
 
@@ -32,7 +33,9 @@ const Header = () => {
   <div className="h-auto place-items-center w-full flex flex-row justify-between font-bold text-xl">
     <div className="text-center w-1/5 h-auto flex border-bg-red col-lg justify-center items-center ">
       <Link to="/trang-chu">
-        <img className="w-1/2 h-[100px]" src={logo} />
+        <img className={ `w-[6vw]`} 
+        
+        src={location.pathname === "/trang-chu" || location.pathname === "/"?logo:logoBlack} />
       </Link>
     </div>
 
@@ -100,10 +103,12 @@ const Header = () => {
           </div>
         ) : (
           <div className="w-full flex flex-row gap-10">
-            <button onClick={() => navigate("/dang-nhap")} className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+            <button onClick={() => navigate("/dang-nhap")} 
+            className= {`${location.pathname ==="/" || location.pathname === "/trang-chu" ? "text-white ":""}border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2`}>
               Đăng nhập
             </button>
-            <button onClick={() => navigate("/dang-ky")} className="border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2">
+            <button onClick={() => navigate("/dang-ky")} 
+            className= {`${location.pathname ==="/" || location.pathname === "/trang-chu" ? "text-white ":""}border border-red-400 hover:bg-red-400 rounded-xl px-3 py-3 text-center w-1/2`}>
               Đăng ký
             </button>
           </div>

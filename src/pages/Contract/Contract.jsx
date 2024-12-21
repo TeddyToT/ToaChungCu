@@ -99,6 +99,7 @@ const Contract = () => {
                     }
 
                     toast.success("Tạo hợp đồng thành công");
+                    navigate("/tai-khoan/hop-dong")
                 } catch (error) {
                     console.error("API Error:", error);
                     toast.error("Không thể tạo hợp đồng . Vui lòng thử lại.",);
@@ -142,6 +143,94 @@ const Contract = () => {
 
 
   const handlePayment =()=>{
+    if (!name) {
+      toast.warning('Chưa nhập họ tên', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+  
+    if (!phone) {
+      toast.warning('Chưa nhập số điện thoại', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+  
+    if (!email) {
+      toast.warning('Chưa nhập email', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+  
+    if (!selectedDate) {
+      toast.warning('Chưa chọn ngày bắt đầu thuê', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+
+    const selected = new Date(selectedDate);
+  const today = new Date();
+  today.setDate(today.getDate() + 2);
+
+  if (selected <= today) {
+    toast.warning('Ngày bắt đầu thuê phải lớn hơn hôm nay ít nhất 2 ngày', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
+    return;
+  }
+
+  if (monthsToAdd < 3) {
+    toast.warning('Số tháng thuê phải từ 3 tháng trở lên', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
+    return;
+  }
     axios.post('http://localhost:8081/v1/api/payment', {
 
       amount: (Number(roomID.price) * monthsDeposit),
@@ -179,7 +268,7 @@ const Contract = () => {
                 value={name}
                 onChange={(e)=>setName(e.target.value)}
                   type="text"
-                  className="uppercase w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
+                  className=" w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
                 <p className=" px-2 text-sm text-gray-400">
                   Như trên CCCD
@@ -244,7 +333,7 @@ const Contract = () => {
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
 
-                <p className=" px-2 text-sm text-gray-400">Số tháng thuê</p>
+                <p className=" px-2 text-sm text-gray-400">Số tháng thuê (ít nhất 3 tháng)</p>
               </div>
             </div>
 
@@ -269,7 +358,7 @@ const Contract = () => {
                   value={monthsDeposit}
                   className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
-                <p className=" px-2 text-sm text-gray-400">Số tháng cần cọc (Trên 3 tháng)</p>
+                <p className=" px-2 text-sm text-gray-400">Số tháng cần cọc (1 nửa tháng thuê)</p>
               </div>
             </div>
           </div>

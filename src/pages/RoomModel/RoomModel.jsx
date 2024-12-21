@@ -1,9 +1,10 @@
 import React from 'react';
 import ModelView from './ModelView';
-
+import { useNavigate } from 'react-router-dom';
 const RoomModel = () => {
+    const navigate = useNavigate()
     const handleGoBack = () => {
-        // Thực hiện chuyển hướng trở lại trang trước đó
+        navigate("/tim-kiem")
     };
 
     return (

@@ -59,7 +59,7 @@ const Login = () => {
 			<div className="w-full max-w-md p-8 space-y-4 bg-white shadow-md">
 				<h1 className="text-2xl font-bold">Đăng nhập</h1>
 			
-				<form onSubmit={handleSubmit}>
+				<form className='flex flex-col gap-4' onSubmit={handleSubmit}>
 			
 					<div className="mb-4 text-left">
 						<label className="block mb-2 text-sm font-bold text-gray-700">
@@ -89,7 +89,7 @@ const Login = () => {
 						/>
 					</div>
 					
-					<div className="mb-2 text-center">
+					{/* <div className="mb-2 text-center">
 						<label className="inline-flex items-center">
 							<input
 								type="checkbox"
@@ -99,7 +99,7 @@ const Login = () => {
 							/>
 							<span className="ml-2 text-sm text-gray-700">Ghi nhớ mật khẩu</span>
 						</label>
-					</div>
+					</div> */}
 				
 					<div className="flex items-center justify-end">
 						<button
@@ -112,7 +112,7 @@ const Login = () => {
 				
 					<div className="flex justify-between mt-4 text-sm">
 						<a href="/dang-ky" className="text-blue-500 font-bold hover:underline">Đăng ký tài khoản</a>
-						<a href="#" className="text-blue-500 font-bold hover:underline">Quên mật khẩu?</a> 
+						<a href="/quen-mat-khau" className="text-blue-500 font-bold hover:underline">Quên mật khẩu?</a> 
 					</div>
 					
 				</form>

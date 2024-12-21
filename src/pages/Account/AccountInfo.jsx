@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/Contexts";
+import { toast } from "react-toastify";
+import axios from "axios";
 const AccountInfo = () => {
   const { userInfo, fetchUserInfo } = useContext(AppContext);
   const userID = localStorage.getItem("userID");
@@ -15,39 +17,94 @@ const AccountInfo = () => {
   useEffect(() => {
     if (userInfo) {
       if (userInfo.name) {
-        setContactInfo((prevState) => ({
-			...prevState, 
-			name: userInfo.name, 
-		  }));
+        setName(userInfo.name)
       }
       if (userInfo.phone) {
-        setContactInfo((prevState) => ({
-			...prevState,
-			phone: userInfo.phone,
-		  }));
+        setPhone(userInfo.phone)
       }
-      if (userInfo.email){
-		setContactInfo((prevState) => ({
-			...prevState,
-			email: userInfo.email,
-		  }));
-	  }
-    }
-  }, [userInfo]);
-  const [contactInfo, setContactInfo] = useState({
-    name: "",
-    citizenId: "",
-    phone: "",
-    email: "",
-  });
 
-  const handleContactChange = (e) => {
-    setContactInfo({ ...contactInfo, [e.target.name]: e.target.value });
-  };
+      if (userInfo.email) {
+        setEmail(userInfo.email)
+      }
+      }
+
+    
+  }, [userInfo]);
+
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [email, setEmail] = useState("")
+
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Contact Info:", contactInfo);
+    const regexPhoneNumber = /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/g;
+    if(!phone.match(regexPhoneNumber)){
+    toast.warning('Sai định dang số điện thoại Việt Nam', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          return
+    }
+
+        if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          toast.warning('Email không hợp lệ', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          return;
+        }
+        axios.put("http://localhost:8081/v1/api/updateUser", {
+          id: userID,
+          name: name,
+          email: email,
+          phone: phone,
+        })
+          .then((res) => {
+            if (res.data.success == false) {
+              toast.error(`Sửa thông tin thất bại ${res.data.message}`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+              });
+    
+            }
+            else {
+              toast.success('Sửa thông tin thành công', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+              });
+              fetchUserInfo(userID)
+              
+            }
+          }
+          )
+          .catch(err => {
+            console.log(err)
+          })
+
   };
 
   return (
@@ -57,14 +114,14 @@ const AccountInfo = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700">
-              Họ và tên (vd: Nguyen Thi Ngoc Anh)
+              Họ và tên (vd: Nguyễn Thị Ngọc Anh)
             </label>
             <input
               type="text"
               name="name"
-              value={contactInfo.name}
-              onChange={handleContactChange}
-              className="w-full uppercase py-3 px-5 border border-gray-300 rounded mt-1"
+              value={name}
+              onChange={(e)=>setName(e.target.value)}
+              className="w-full py-3 px-5 border border-gray-300 rounded mt-1"
               required
             />
             <p className="px-2 text-sm text-gray-400">
@@ -90,8 +147,8 @@ const AccountInfo = () => {
             <input
               type="text"
               name="phone"
-              value={contactInfo.phone}
-              onChange={handleContactChange}
+              value={phone}
+              onChange={(e)=>setPhone(e.target.value)}
               className="py-3 px-5 w-full p-2 border border-gray-300 rounded mt-1"
               required
             />
@@ -103,8 +160,8 @@ const AccountInfo = () => {
             <input
               type="email"
               name="email"
-              value={contactInfo.email}
-              onChange={handleContactChange}
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
               className="py-3 px-5 w-full p-2 border border-gray-300 rounded mt-1"
               required
             />

@@ -76,7 +76,7 @@ const ContractDetails = () => {
                   value={name}
                   disabled
                   type="text"
-                  className="uppercase w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
+                  className=" w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400"
                 />
               </div>
             </div>
@@ -168,7 +168,7 @@ const ContractDetails = () => {
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Trạng thái hợp đồng</p>
                 <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
-                  {detailContract.state} 
+                  {detailContract.state == "Pending"?"Chờ xét duyệt":detailContract.state == "Done"?"Thành công":detailContract.state == "Cancel"?"Đã hủy":"Hết hạn"} 
                 </p>
               </div>
             </div>

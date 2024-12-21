@@ -1,20 +1,146 @@
 import React, { useState } from 'react';
-
+// import { CiUser, CiLock, CiMail } from "react-icons/ci";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const navigate = useNavigate()
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+  const togglePasswordVisibility2 = () => {
+    setShowPassword2((prevState) => !prevState);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+
+    if (!password) {
+      toast.warning('Chưa nhập mật khẩu', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
-    // Handle signup logic here
-    console.log(`Email: ${email}, Password: ${password}`);
-  };
+    if (!password2) {
+      toast.warning('Chưa nhập xác nhận mật khẩu', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    if (!email) {
+      toast.warning('Chưa nhập email', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      toast.warning('Email không hợp lệ', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    if (password != password2) {
+      toast.warning('Mật khẩu chưa trùng khớp', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    else if (password.length < 6) {
+      toast.warning('Yêu cầu mật khẩu hơn 6 kí tự', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+
+    axios.post("http://localhost:8081/v1/api/signUp", {
+      password: password,
+      email: email,
+      role: "Customer",
+    })
+      .then((res) => {
+        if (res.data.success == false) {
+          toast.error('Đăng kí tài khoản thất bại', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+
+        }
+        else {
+          toast.success('Đăng kí tài khoản thành công, mời đăng nhập', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/dang-nhap")
+        }
+      }
+      )
+      .catch(err => {
+        console.log(err)
+      })
+
+
+  }
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
@@ -42,31 +168,52 @@ const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-4 text-left">
+          <div className="mb-4 text-left relative">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Mật khẩu
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={handleInputChange(setPassword)}
               placeholder="Hãy nhập mật khẩu mới"
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:ring"
               required
             />
+            {password && (<span
+                      className="absolute right-4 top-9 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? (
+                        <FaRegEye size={24} />
+                      ) : (
+                        <FaRegEyeSlash size={24} />
+                      )}
+                    </span>)}
           </div>
-          <div className="mb-6 text-left">
+          <div className="mb-6 text-left relative">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Xác nhận mật khẩu
             </label>
             <input
-              type="password"
-              value={confirmPassword}
-              onChange={handleInputChange(setConfirmPassword)}
+              type={showPassword2 ? "text" : "password"}
+              value={password2}
+              onChange={handleInputChange(setPassword2)}
               placeholder="Nhập lại mật khẩu"
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:ring"
               required
             />
+            {password2 && (<span
+                      className="absolute right-4 top-9 cursor-pointer"
+                      onClick={togglePasswordVisibility2}
+                    >
+                      {showPassword2 ? (
+                        <FaRegEye size={24} />
+                      ) : (
+                        <FaRegEyeSlash size={24} />
+                      )}
+                    </span>)}
+            
           </div>
           <div className="flex items-center justify-end">
             <button

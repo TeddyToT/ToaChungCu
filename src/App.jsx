@@ -26,7 +26,9 @@ import  Account  from './pages/Account/TabAccount';
 import AccountInfo from './pages/Account/AccountInfo';
 import Contract from './pages/Contract/Contract';
 import ContractDetails from './pages/Account/ContractDetails';
-
+import ForgotPassword from './pages/Login/ForgotPassword';
+import ConfirmCode from './pages/Login/ConfirmCode';
+import AutoTop from './components/ScrollToTop/AutoTop';
 function App() {
 	const [count, setCount] = useState(0)
 
@@ -34,8 +36,10 @@ function App() {
     <div className="relative">
       <AppProvider>
         <ToastContainer/>
+        
         <RollToTopButton />
         <BrowserRouter>
+        <AutoTop/>
           <Header />
           <Routes>
             <Route>
@@ -47,7 +51,8 @@ function App() {
               <Route path="/chi-tiet-phong" element={<RoomModel />} />
               <Route path="/dang-nhap" element={<Login />} />
               <Route path="/dang-ky" element={<SignUp />} />
-
+              <Route path="/quen-mat-khau" element={<ForgotPassword />} />
+              <Route path="/quen-mat-khau/xac-nhan" element={<ConfirmCode />} />
 
 			        <Route path="/tai-khoan" element={<Account />}>
                 <Route index element={<AccountInfo />} />

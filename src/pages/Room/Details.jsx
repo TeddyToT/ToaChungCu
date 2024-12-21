@@ -7,12 +7,13 @@ import { FreeMode, Thumbs } from "swiper/modules";
 import axios from "axios";
 import { AppContext } from "../../context/Contexts";
 import { useNavigate, Link } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
 const Details = () => {
   const { roomID, setRoomID, fetchRoomID } = useContext(AppContext);
   const [firstLoad, setFirstLoad] = useState(true);
+  const userID = localStorage.getItem("userID");
   const {id} = useParams()
   const [phong, setPhong] = useState("")
   const [images, setImages] = useState([ 
@@ -37,6 +38,10 @@ const Details = () => {
   
 
   const handleThue = () => {
+    if(!userID){
+      toast.warn("Yêu cầu đăng nhập để thuê")
+      return;
+    }
     const roomid = id; // Lấy giá trị id
     navigate('/thanh-toan', { state: { roomid } });
   };

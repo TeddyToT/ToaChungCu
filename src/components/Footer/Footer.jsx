@@ -1,14 +1,14 @@
 import React from "react";
 import { FaFacebook, FaYoutube, FaTwitter } from "react-icons/fa";
 // import {NavLink} from "react-router"
-import logo from '../../assets/react.svg'
+import logo from '../../assets/images/geng.png'
 const Footer = () => {
     return (
         <div className=" flex flex-col p-10 bg-black text-neutral-content bottom-0 w-full text-white">
             <div className="flex flex-row w-full border-b-2 pb-7">
                 <div className="flex flex-row w-1/2 items-center gap-10">
                     <img src={logo} className="h-[100px]"/>
-                    <p className="text-5xl font-semibold">GEN GROUP</p>
+                    <p className="text-5xl font-black italic"> <span className="text-[#A58721]">GEN</span> GROUP</p>
                 </div>
                 <div className="flex flex-row w-1/2 justify-end items-center gap-5 mr-10">
                 <FaFacebook size={50}/>
