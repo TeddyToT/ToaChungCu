@@ -117,7 +117,7 @@ const ContractDetails = () => {
                   {detailContract?.roomId?.floor || "N/A"}
                 </p>
 
-                <p className="w-1/3 px-2 font-semibold text-end">
+                <p className="w-1/3 px-2 font-bold text-end">
                   {Number(detailContract?.roomId?.price).toLocaleString()}VNĐ /
                   tháng
                 </p>
@@ -152,7 +152,7 @@ const ContractDetails = () => {
               </div>
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Số tiền cọc</p>
-                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                <p className="font-bold w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
                   {detailContract.deposit?.toLocaleString()} VNĐ
                 </p>
               </div>
@@ -161,13 +161,13 @@ const ContractDetails = () => {
             <div className="flex flex-row w-full gap-3">
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Tổng giá tiền:</p>
-                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                <p className="font-bold w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
                   {detailContract.total?.toLocaleString()} VNĐ
                 </p>
               </div>
               <div className="flex flex-col w-1/2 gap-1">
                 <p className="px-2 font-semibold">Trạng thái hợp đồng</p>
-                <p className="w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
+                <p className="font-bold w-full rounded-lg border border-stroke px-4 py-4 text-black outline-none focus:border-orange-400">
                   {detailContract.state == "Pending"?"Chờ xét duyệt":detailContract.state == "Done"?"Thành công":detailContract.state == "Cancel"?"Đã hủy":"Hết hạn"} 
                 </p>
               </div>

@@ -139,7 +139,7 @@ const Details = () => {
                 </tr>
                 <tr className="">
                   <td className="p-3 text-gray-700">Giá thuê</td>
-                  <td className="p-3 font-semibold">{Number(roomID.price).toLocaleString()} VNĐ / tháng</td>
+                  <td className="p-3 font-bold text-xl text-red-500">{Number(roomID.price).toLocaleString()} VNĐ / tháng</td>
                 </tr>
               </tbody>
             </table>

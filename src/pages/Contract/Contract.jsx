@@ -374,7 +374,7 @@ const Contract = () => {
                   {roomID.floor}
                 </p>
 
-                <p className="w-1/2 px-2 font-semibold text-end">
+                <p className="w-1/2 px-2 font-bold text-end">
                   {Number(roomID.price).toLocaleString()}VNĐ / tháng
                 </p>
               </div>
@@ -382,7 +382,7 @@ const Contract = () => {
               <div className="flex flex-row w-full gap-3">
                 <p className="px-2 w-1/2 font-semibold">Số tháng cần cọc </p>
 
-                <p className="px-2 w-1/2 font-semibold text-end">
+                <p className="px-2 w-1/2 font-bold text-end">
                   {monthsDeposit} tháng
                 </p>
               </div>
@@ -390,7 +390,7 @@ const Contract = () => {
             <div className="w-full flex flex-col gap-5 ">
               <div className="flex flex-row w-full gap-3">
                 <p className="px-2 font-semibold w-1/2">Tổng giá tiền</p>
-                <p className="w-1/2 px-2 font-semibold text-end">
+                <p className="w-1/2 px-2 font-bold text-xl text-red-500 text-end">
                   {(Number(roomID.price) * monthsDeposit).toLocaleString()}VNĐ
                 </p>
               </div>

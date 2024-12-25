@@ -27,7 +27,7 @@ const RoomList = ({ rooms }) => {
                   {" "}
                   Phòng {room.roomNumber} - Tầng {room.floor}
                 </h2>
-                <p className="text-red-500 font-bold mt-2">
+                <p className="text-red-500 font-extrabold text-xl mt-2">
                   {room.price.toLocaleString()} triệu đồng/tháng
                 </p>
                 <p className="text-gray-500">{room.size} m2</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import avt from '../../assets/react.svg'
+import avt from '../../assets/images/gengBlack.png'
 import AccountButton from "./AccountButton";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
